@@ -1,0 +1,24 @@
+1. for in memory mode use below command to run the server
+ Mode 1: In-Memory Only (No Redis)
+#docker build -t session-benchmarker .
+
+#docker run --rm -p 8080:8080 \
+  --cpus="1" \
+  --memory="512m" \
+  -e USE_REDIS=false \
+  -e SESSION_TTL=30s \
+  -e CLEANUP_INTERVAL=10s \
+  -e PAYLOAD_SIZE=1024 \
+  session-benchmarker
+
+2. for redis mode use docker-compose to run the server
+#docker-compose up --build
+to stop the server press ctrl+c in terminal where service is running and then 
+#docker-compose down
+to clean up containers
+
+3. now for testing run k6
+
+#k6 run --vus 100 --duration 1m test.js
+Or with environment variables:
+#MAX_VUS=500 TEST_DURATION=5m READ_WRITE_RATIO=10 k6 run test.js

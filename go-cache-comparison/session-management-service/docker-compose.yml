@@ -1,0 +1,28 @@
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    mem_limit: 512m
+    cpus: 1
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - USE_REDIS=true
+      - REDIS_ADDR=redis:6379
+      - SESSION_TTL=30s
+      - CLEANUP_INTERVAL=10s
+      - PAYLOAD_SIZE=1024
+    depends_on:
+      redis:
+        condition: service_healthy
+    mem_limit: 512m
+    cpus: 1
