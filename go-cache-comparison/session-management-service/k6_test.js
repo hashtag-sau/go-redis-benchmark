@@ -16,7 +16,7 @@ let errorRate = new Rate("errors");
 // Configuration knobs
 const BASE_URL = __ENV.BASE_URL || "http://localhost:8080";
 const PAYLOAD_SIZE = __ENV.PAYLOAD_SIZE || 1024;
-const TEST_DURATION = __ENV.TEST_DURATION || "1m";
+const TEST_DURATION = __ENV.TEST_DURATION || "2m";
 const RAMP_UP_TIME = __ENV.RAMP_UP_TIME || "30s";
 const MAX_VUS = __ENV.MAX_VUS || 100;
 const SESSION_TTL = __ENV.SESSION_TTL || 10;
@@ -24,8 +24,8 @@ const READ_WRITE_RATIO = __ENV.READ_WRITE_RATIO || 4; // 4:1 read:write ratio
 
 export let options = {
   stages: [
-    { duration: RAMP_UP_TIME, target: MAX_VUS }, // ramp-up
-    { duration: TEST_DURATION, target: MAX_VUS }, // main test
+    { duration: "30s", target: 500 }, // ramp-up
+    { duration: "2m", target: 500 }, // main test
     { duration: "30s", target: 0 }, // ramp-down
   ],
   thresholds: {

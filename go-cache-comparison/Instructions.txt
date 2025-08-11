@@ -1,0 +1,1 @@
+k6 run --out cloud k6test.js

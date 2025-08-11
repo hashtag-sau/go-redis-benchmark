@@ -3,9 +3,9 @@ import { check, sleep } from "k6";
 
 export const options = {
   stages: [
-    { duration: "10s", target: 20 }, // Ramp-up
-    { duration: "40s", target: 100 }, // Peak load
-    { duration: "10s", target: 0 }, // Ramp-down
+    { duration: "30s", target: 500 }, // Ramp-up
+    { duration: "2m", target: 500 }, // Peak load
+    { duration: "30s", target: 0 }, // Ramp-down
   ],
   thresholds: {
     http_req_failed: ["rate<0.01"], // <1% errors
